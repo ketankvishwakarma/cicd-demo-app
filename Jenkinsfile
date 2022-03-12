@@ -8,8 +8,11 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh './mvnw clean'
-                sh './mvnw install'
+                sh 'pwd'
+                sh 'ls'
+                sh 'll'
+                sh 'mvn '
+                sh 'mvn clean install'
             }
         }
          stage('Test') {
