@@ -20,22 +20,24 @@ pipeline {
 
             }
         }
-        stage('Build Docker Image & Push') {
+        stage('Build Docker Image') {
+            agent any
             steps {
-               def customImage = docker.build("ketankvishwakarma/cicd-demo-app:01")
-                customImage.push()
-                customImage.push('latest')
-                /* sh 'docker build -t ketankvishwakarma/cicd-demo-app:01 .' */
+                
+                sh 'docker ps'
+
+                sh 'docker build -t ketankvishwakarma/cicd-demo-app:01 .'
 
             }
         }
-/*         stage('Push Docker Image') {
+        stage('Push Docker Image') {
+            agent any
             steps {
 
                 sh 'docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01'
 
             }
-        } */
+        }
     }
     post {
         always {
