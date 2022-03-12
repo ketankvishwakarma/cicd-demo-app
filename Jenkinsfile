@@ -10,7 +10,6 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'ls'
-                sh 'll'
                 sh 'mvn '
                 sh 'mvn clean install'
             }
