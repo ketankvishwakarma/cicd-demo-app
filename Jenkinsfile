@@ -2,9 +2,9 @@ pipeline {
       agent {
         docker { image 'maven:3.8-openjdk-16' }
     }
-    triggers {
+   /*  triggers {
         pollSCM '* * * * *'
-    }
+    } */
     stages {
         stage('Build') {
             steps {
