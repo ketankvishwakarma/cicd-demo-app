@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'ls'
-                sh 'mvn clean install'
+                sh 'mvn clean install -DskipTests'
             }
         }
          stage('Test') {
@@ -20,22 +20,22 @@ pipeline {
 
             }
         }
-        stage('Build Docker Image') {
+        stage('Build Docker Image & Push') {
             steps {
-
-                sh 'docker ps'
-                
-                sh 'docker build -t ketankvishwakarma/cicd-demo-app:01 .'
+               def customImage = docker.build("ketankvishwakarma/cicd-demo-app:01")
+                customImage.push()
+                customImage.push('latest')
+                /* sh 'docker build -t ketankvishwakarma/cicd-demo-app:01 .' */
 
             }
         }
-        stage('Push Docker Image') {
+/*         stage('Push Docker Image') {
             steps {
 
                 sh 'docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01'
 
             }
-        }
+        } */
     }
     post {
         always {
