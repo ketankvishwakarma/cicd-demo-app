@@ -15,7 +15,7 @@ pipeline {
         }
          stage('Test') {
             steps {
-                sh './mvn test'
+                sh 'mvn test'
             }
         }
         stage('Build Docker Image') {
@@ -27,6 +27,12 @@ pipeline {
             steps {
                 sh 'docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01'
             }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            junit 'build/surefire-reports/*.xml'
         }
     }
 }
