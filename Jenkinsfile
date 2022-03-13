@@ -1,26 +1,20 @@
 pipeline {
-      agent {
-        docker { image 'maven:3.8-openjdk-16' }
+      agent {label "linux" }
     }
   
     stages {
         stage('Docker node test') {
             steps {
-                sh 'pwd'
-                sh 'ls'
-                sh 'mvn clean install -DskipTests'
+                sh './mvnw clean install -DskipTests'
             }
         }
          stage('Test') {
             steps {
-                sh 'pwd'
-                sh 'mvn test'
+                sh './mvnw  test'
             }
         }
         stage('Build Docker Image') {
-           
             steps {
-                sh 'pwd'
                 sh """
                 docker ps
                 docker build -t ketankvishwakarma/cicd-demo-app:01 .
@@ -41,7 +35,7 @@ pipeline {
         always {
             archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             junit 'target/surefire-reports/*.xml'
-            cleanWs()
+            /* cleanWs()
             dir("${env.WORKSPACE}@tmp") {
               deleteDir()
             }
@@ -50,7 +44,7 @@ pipeline {
             }
             dir("${env.WORKSPACE}@script@tmp") {
               deleteDir()
-            }
+            } */
         }
     }
 }
