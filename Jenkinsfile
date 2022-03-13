@@ -38,7 +38,7 @@ pipeline {
       }
       steps {
         // Steps run in maven:3-alpine docker container on docker slave
-        sh sh 'mvn test'
+            sh 'mvn test'
       }
     }
   }
