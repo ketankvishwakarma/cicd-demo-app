@@ -36,6 +36,16 @@ pipeline {
         always {
             archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             junit 'target/surefire-reports/*.xml'
+            cleanWs()
+            dir("${env.WORKSPACE}@tmp") {
+              deleteDir()
+            }
+            dir("${env.WORKSPACE}@script") {
+              deleteDir()
+            }
+            dir("${env.WORKSPACE}@script@tmp") {
+              deleteDir()
+            }
         }
     }
 }
