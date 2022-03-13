@@ -1,6 +1,5 @@
 pipeline {
-      agent {label "linux" }
-    }
+    agent {label "linux" }
   
     stages {
         stage('Docker node test') {
@@ -15,7 +14,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-
+                
                 sh """
                 docker ps
                 docker build -t ketankvishwakarma/cicd-demo-app:01 .
@@ -36,7 +35,7 @@ pipeline {
         always {
             archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             junit 'target/surefire-reports/*.xml'
-            /* cleanWs()
+           /*  cleanWs()
             dir("${env.WORKSPACE}@tmp") {
               deleteDir()
             }
