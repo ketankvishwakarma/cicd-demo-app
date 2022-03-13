@@ -27,7 +27,6 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh """
-                    //docker push ketankvishwakarma/cicd-demo-app:01
                     docker ps
                     docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01
                     docker ps
