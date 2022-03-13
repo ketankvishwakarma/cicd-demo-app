@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Docker node test') {
             steps {
-                sh './mvnw clean install -DskipTests'
+                /* sh './mvnw clean install -DskipTests' */
+                sh 'echo test'
             }
         }
          stage('Test') {
@@ -14,20 +15,22 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                
-                sh """
+                sh 'echo image'
+                /* sh """
                 docker ps
                 docker build -t ketankvishwakarma/cicd-demo-app:01 .
-                """
+                """ */
             }
         }
         stage('Push Docker Image') {
             steps {
                 sh 'pwd'
-
                 sh """
-                    docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01
+                    docker ps -a
                 """
+               /*  sh """
+                    docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01
+                """ */
             }
         }
     }
