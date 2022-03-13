@@ -29,12 +29,11 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh """
-                    docker images
+                    docker ps
                     docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01
+                    docker ps
+                    docker stop $(docker ps -q) 
                 """
-               /*  sh """
-                    docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01
-                """ */
             }
         }
     }
