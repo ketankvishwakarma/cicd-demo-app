@@ -31,4 +31,12 @@ public class SimpleRestControllerTest {
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().string("Hello sweety!"));
     }
+
+    @Test
+    void testHelloSomethig_with_null() throws Exception {
+        String something = null;
+        mockMvc.perform(get("/"+something))
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.content().string("Can't say Hello to NULL Dude!"));
+    }
 }

@@ -16,6 +16,9 @@ public class SimpleRestController {
 
     @GetMapping("/{something}")
     public String helloSomethig(@PathVariable String something){
+        if(something==null || something.equals("null")){
+            return "Can't say Hello to NULL Dude!";
+        }
         return "Hello "+something+"!";
     }
 }
