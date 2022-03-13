@@ -6,28 +6,31 @@ pipeline {
             steps {
                 /* sh './mvnw clean install -DskipTests' */
                 sh 'echo clean package'
+                sh './mvnw clean install -DskipTests'
             }
         }
          stage('Test') {
             steps {
                  sh 'echo test'
-                /* sh './mvnw  test' */
+                 sh './mvnw  test'
             }
         }
         stage('Build Docker Image') {
             steps {
                 sh 'echo image'
-                /* sh """
-                docker ps
+                 sh """
+                docker images
                 docker build -t ketankvishwakarma/cicd-demo-app:01 .
-                """ */
+                docker images
+                """ 
             }
         }
         stage('Push Docker Image') {
             steps {
                 sh 'pwd'
                 sh """
-                    docker ps -a
+                    docker images
+                    docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01
                 """
                /*  sh """
                     docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01
