@@ -5,12 +5,13 @@ pipeline {
         stage('Docker node test') {
             steps {
                 /* sh './mvnw clean install -DskipTests' */
-                sh 'echo test'
+                sh 'echo clean package'
             }
         }
          stage('Test') {
             steps {
-                sh './mvnw  test'
+                 sh 'echo test'
+                /* sh './mvnw  test' */
             }
         }
         stage('Build Docker Image') {
