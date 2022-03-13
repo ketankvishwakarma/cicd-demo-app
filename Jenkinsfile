@@ -1,10 +1,8 @@
 pipeline {
     agent any
-  
     stages {
         stage('Docker node test') {
             steps {
-                /* sh './mvnw clean install -DskipTests' */
                 sh 'echo clean package'
                 sh './mvnw clean install -DskipTests'
             }
@@ -32,7 +30,7 @@ pipeline {
                     docker ps
                     docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01
                     docker ps
-                    docker stop $(docker ps -q) 
+                    docker stop \$(docker ps -q) 
                 """
             }
         }
