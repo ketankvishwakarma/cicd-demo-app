@@ -21,14 +21,19 @@ pipeline {
            
             steps {
                 sh 'pwd'
-                sh 'docker ps'
-                sh 'docker build -t ketankvishwakarma/cicd-demo-app:01 .'
+                sh """
+                docker ps
+                docker build -t ketankvishwakarma/cicd-demo-app:01 .
+                """
             }
         }
         stage('Push Docker Image') {
             steps {
                 sh 'pwd'
-                sh 'docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01'
+
+                sh """
+                    docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01
+                """
             }
         }
     }
