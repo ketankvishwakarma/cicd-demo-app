@@ -15,6 +15,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
+
                 sh """
                 docker ps
                 docker build -t ketankvishwakarma/cicd-demo-app:01 .
