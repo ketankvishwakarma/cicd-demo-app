@@ -1,40 +1,45 @@
 pipeline {
+  // Assign to docker slave(s) label, could also be 'any'
+  agent {
+    label 'docker' 
+  }
+
+  stages {
+    stage('Docker node test') {
+      /* agent {
+        docker {
+          // Set both label and image
+          label 'docker'
+          image 'node:7-alpine'
+          args '--name docker-node' // list any args
+        }
+      } */
+    agent {
+        docker { 
+            label 'docker'
+            image 'maven:3.8-openjdk-16' 
+        }
+    }
+      steps {
+        // Steps run in node:7-alpine docker container on docker slave
+            sh 'pwd'
+            sh 'ls'
+            sh 'mvn clean install -DskipTests'
+      }
+    }
+
+    stage('Docker maven test') {
       agent {
-        docker { image 'maven:3.8-openjdk-16' }
+        docker {
+          // Set both label and image
+          label 'docker'
+          image 'maven:3.8-openjdk-16'
+        }
+      }
+      steps {
+        // Steps run in maven:3-alpine docker container on docker slave
+        sh sh 'mvn test'
+      }
     }
-   /*  triggers {
-        pollSCM '* * * * *'
-    } */
-    stages {
-        stage('Build') {
-            steps {
-                sh 'pwd'
-                sh 'ls'
-                sh 'mvn clean install -DskipTests'
-            }
-        }
-         stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-        stage('Build Docker Image') {
-           
-            steps {
-                sh 'docker ps'
-                sh 'docker build -t ketankvishwakarma/cicd-demo-app:01 .'
-            }
-        }
-        stage('Push Docker Image') {
-            steps {
-                sh 'docker run -d -p 9000:9000 ketankvishwakarma/cicd-demo-app:01'
-            }
-        }
-    }
-    post {
-        always {
-            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
-            junit 'target/surefire-reports/*.xml'
-        }
-    }
-}
+  }
+} 
